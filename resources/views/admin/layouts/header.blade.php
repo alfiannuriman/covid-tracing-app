@@ -46,7 +46,7 @@
         @endphp
 
         <div class="row align-items-center py-4">
-          <div class="col-8 offset-2">
+          <div class="col-12 col-md-8 offset-md-2">
             <div class="alert alert-dismissible fade show {{ $alert_class }}" role="alert">
               <span class="alert-icon"><i class="{{ $alert_icon }}"></i></span>
               <span class="alert-text"><strong>{{ $alert_title }}</strong> {{ $alert_subtitle }}</span>

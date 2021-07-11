@@ -17,19 +17,19 @@
           <div class="align-items-center mt-3 mb-3">
             <form action="{{ route('places.index') }}" method="GET">
               <div class="form-group row">
-                <label for="filterName" class="col-2 col-form-label">Name : </label>
-                <div class="col-4">
+                <label for="filterName" class="col-4 col-md-2 col-form-label">Name : </label>
+                <div class="col-8 col-md-4">
                   <input name="name" type="text" id="filterName" class="form-control" placeholder="Name" value="{{ isset($_GET['name']) ? $_GET['name'] : '' }}">
                 </div>
               </div>
               <div class="form-group row">
-                <label for="filterPlaceCode" class="col-2 col-form-label">Place code : </label>
-                <div class="col-4">
+                <label for="filterPlaceCode" class="col-4 col-md-2 col-form-label">Place code : </label>
+                <div class="col-8 col-md-4">
                   <input name="place_code" type="text" id="filterPlaceCode" class="form-control" placeholder="Place code" value="{{ isset($_GET['place_code']) ? $_GET['place_code'] : '' }}">
                 </div>
               </div>
               <div class="form-group row">
-                <div class="offset-2 col-4">
+                <div class="offset-md-2 col-md-4 col-6 offset-4">
                   <button class="btn btn-icon btn-default" type="submit">
                     <span class="btn-inner--icon"><i class="fas fa-filter"></i></span>
                     <span class="btn-inner--text">Filter</span>
@@ -59,36 +59,44 @@
                     <td>{{ $model->address }}</td>
                     <td>{{ $model->place_code }}</td>
                     <td>
-                      <a 
-                        href="{{ url('/admin/places/' . $model->id . '/edit') }}"
-                        class="btn btn-icon btn-default btn-sm" 
-                        data-toggle="tooltip" 
-                        data-placement="top" 
-                        title="Edit"
-                      >
-                        <span class="btn-inner--icon"><i class="fas fa-pencil-alt"></i></span>
-                    </a>
-                    <form action="{{ route('places.destroy', ['place' => $model->id]) }}" method="POST">
-                      @csrf @method('DELETE')
-
-                      <button 
-                        class="btn btn-icon btn-danger btn-sm" 
-                        type="submit"
-                        data-toggle="tooltip" 
-                        data-placement="top" 
-                        title="Delete"
-                        onclick="return confirm('Are you sure to delete data ?')"
-                      >
-                        <span class="btn-inner--icon"><i class="fas fa-trash-alt"></i></span>
-                      </button>
-                    </form>
+                      <div class="row">
+                        <div class="col-2">
+                          <a 
+                            href="{{ url('/admin/places/' . $model->id . '/edit') }}"
+                            class="btn btn-icon btn-default btn-sm" 
+                            data-toggle="tooltip" 
+                            data-placement="top" 
+                            title="Edit"
+                          >
+                            <span class="btn-inner--icon"><i class="fas fa-pencil-alt"></i></span>
+                          </a>
+                        </div>
+                        <div class="col-2 offset-1">
+                          <form action="{{ route('places.destroy', ['place' => $model->id]) }}" method="POST">
+                            @csrf @method('DELETE')
+      
+                            <button 
+                              class="btn btn-icon btn-danger btn-sm" 
+                              type="submit"
+                              data-toggle="tooltip" 
+                              data-placement="top" 
+                              title="Delete"
+                              onclick="return confirm('Are you sure to delete data ?')"
+                            >
+                              <span class="btn-inner--icon"><i class="fas fa-trash-alt"></i></span>
+                            </button>
+                          </form>
+                        </div>
+                      </div>
                     </td>
                   </tr>
                 @endforeach
               </tbody>
             </table>
           </div>
-          {{ $models->links() }}
+          <div class="py-3">
+            {{ $models->links() }}
+          </div>
         </div>
       </div>
     </div>
