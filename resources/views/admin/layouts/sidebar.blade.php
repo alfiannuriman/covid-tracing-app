@@ -19,9 +19,9 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="examples/icons.html">
-              <i class="ni ni-planet text-orange"></i>
-              <span class="nav-link-text">Icons</span>
+            <a class="nav-link" href="{{ url('/admin/places') }}">
+              <i class="ni ni-building text-primary"></i>
+              <span class="nav-link-text">Places</span>
             </a>
           </li>
           <li class="nav-item">
