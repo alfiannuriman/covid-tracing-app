@@ -1,4 +1,4 @@
-@extends('layouts.minimum.template', ['page_title' => 'Login', 'page_subtitle' => 'Silahkan login untuk memulai.'])
+@extends('layouts.minimum.template', ['page_title' => 'Register', 'page_subtitle' => 'Silahkan register dengan data pribadi anda.'])
 @section('content')
   <div class="container mt--8 pb-5">
     <div class="row justify-content-center">
@@ -6,9 +6,24 @@
         <div class="card bg-secondary border-0 mb-0">
           <div class="card-body px-lg-5 py-lg-5">
             <div class="text-center text-muted mb-4">
-              <small>Sign in with credentials</small>
+              <small>Register with your information</small>
             </div>
-            <form role="form" method="POST" action="{{ url('/auth/login') }}">
+            <form role="form" method="POST" action="{{ url('/auth/register') }}">
+
+              <div class="form-group mb-3">
+                <div class="input-group input-group-merge input-group-alternative">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="ni ni-circle-08"></i></span>
+                  </div>
+                  <input name="name" class="form-control @error('name') is-invalid @enderror" placeholder="Name">
+                  @error('name')
+                    <div class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                  @enderror
+                </div>
+              </div>
+
               <div class="form-group mb-3">
                 <div class="input-group input-group-merge input-group-alternative">
                   <div class="input-group-prepend">
@@ -36,7 +51,7 @@
                 </div>
               </div>
               <div class="text-center">
-                <button type="submit" class="btn btn-primary my-4 btn-block">Login</button>
+                <button type="submit" class="btn btn-primary my-4 btn-block">Register</button>
               </div>
               @csrf
             </form>
@@ -44,7 +59,7 @@
         </div>
         <div class="row mt-3">
           <div class="col-12">
-            <a href="{{ url('/auth/register') }}" class="text-light"><small>Dont have an account ?, please register</small></a>
+            <a href="{{ url('/auth/login') }}" class="text-light"><small>Already have an acoount ?, please login</small></a>
           </div>
         </div>
       </div>

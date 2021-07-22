@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -45,4 +47,25 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function register(array $data)
+    {
+        try {
+            DB::transaction(function () use ($data) {
+                $this->name = $data['name'];
+                $this->email = $data['email'];
+                $this->password = Hash::make($data['password']);
+
+                if ($this->save()) {
+                    $this->assignRole(self::ROLE_USER_CUSTOMER);
+
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
 }
