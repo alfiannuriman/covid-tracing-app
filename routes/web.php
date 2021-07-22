@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PlacesController;
+use App\Http\Controllers\NexusEventController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +21,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/nexus/401', [NexusEventController::class, 'unauthorized'])->name('401');
+
 Route::middleware(['guest'])->group(function () {
     Route::get('/auth/login', [AuthController::class, 'login'])->name('login');
     Route::post('/auth/login', [AuthController::class, 'storeLogin']);
@@ -32,7 +35,7 @@ Route::middleware(['auth'])->group(function () {
         return view('admin.dashboard');
     });
 
-    Route::prefix('admin')->group(function () {
+    Route::group(['prefix' => 'admin', 'middleware' => 'auth.role:' . \App\Models\User::ROLE_USER_ADMIN], function () {
         Route::resource('places', PlacesController::class);
     });
 });
