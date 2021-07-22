@@ -10,4 +10,9 @@ class NexusEventController extends Controller
     {
         return view('errors.401');
     }
+
+    public function serverError()
+    {
+        return view('errors.500');
+    }
 }

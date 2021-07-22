@@ -22,6 +22,7 @@ Route::get('/', function () {
 });
 
 Route::get('/nexus/401', [NexusEventController::class, 'unauthorized'])->name('401');
+Route::get('/nexus/401', [NexusEventController::class, 'serverError'])->name('500');
 
 Route::middleware(['guest'])->group(function () {
     Route::get('/auth/login', [AuthController::class, 'login'])->name('login');
@@ -31,6 +32,8 @@ Route::middleware(['guest'])->group(function () {
 });
 
 Route::middleware(['auth'])->group(function () {
+    Route::post('/auth/logout', [AuthController::class, 'logout'])->name('logout');
+
     Route::get('/dashboard', function () {
         return view('admin.dashboard');
     });
