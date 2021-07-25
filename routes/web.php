@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PlacesController;
 use App\Http\Controllers\NexusEventController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +23,7 @@ Route::get('/', function () {
 });
 
 Route::get('/nexus/401', [NexusEventController::class, 'unauthorized'])->name('401');
-Route::get('/nexus/401', [NexusEventController::class, 'serverError'])->name('500');
+Route::get('/nexus/500', [NexusEventController::class, 'serverError'])->name('500');
 
 Route::middleware(['guest'])->group(function () {
     Route::get('/auth/login', [AuthController::class, 'login'])->name('login');
@@ -34,11 +35,15 @@ Route::middleware(['guest'])->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::post('/auth/logout', [AuthController::class, 'logout'])->name('logout');
 
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard');
+    Route::group(['middleware' => 'auth.role:' . \App\Models\User::ROLE_USER_CUSTOMER], function () {
+        Route::get('/dashboard', [UserController::class, 'dashboard']);
     });
 
     Route::group(['prefix' => 'admin', 'middleware' => 'auth.role:' . \App\Models\User::ROLE_USER_ADMIN], function () {
         Route::resource('places', PlacesController::class);
+
+        Route::get('/dashboard', function () {
+            return view('admin.dashboard');
+        });
     });
 });
