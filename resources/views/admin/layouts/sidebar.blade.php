@@ -25,13 +25,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="examples/map.html">
-              <i class="ni ni-pin-3 text-primary"></i>
-              <span class="nav-link-text">Google</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="examples/profile.html">
+            <a class="nav-link" href="{{ url('/user/profile') }}">
               <i class="ni ni-single-02 text-yellow"></i>
               <span class="nav-link-text">Profile</span>
             </a>

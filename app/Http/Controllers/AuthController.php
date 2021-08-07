@@ -17,7 +17,7 @@ class AuthController extends Controller
     public function storeLogin(LoginRequest $request)
     {
         if (Auth::attempt($request->only(['email', 'password']))) {
-            return redirect('/dashboard');
+            return redirect('/user/dashboard');
         }
 
         return back()->withErrors([

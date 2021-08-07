@@ -35,8 +35,11 @@ Route::middleware(['guest'])->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::post('/auth/logout', [AuthController::class, 'logout'])->name('logout');
 
-    Route::group(['middleware' => 'auth.role:' . \App\Models\User::ROLE_USER_CUSTOMER], function () {
+    Route::group(['prefix' => 'user', 'middleware' => 'auth.role:' . \App\Models\User::ROLE_USER_CUSTOMER], function () {
         Route::get('/dashboard', [UserController::class, 'dashboard']);
+
+        Route::get('/profile', [UserController::class, 'profile']);
+        Route::post('/profile', [UserController::class, 'storeProfile']);
     });
 
     Route::group(['prefix' => 'admin', 'middleware' => 'auth.role:' . \App\Models\User::ROLE_USER_ADMIN], function () {
