@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PlacesController;
 use App\Http\Controllers\NexusEventController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PlaceRegistrationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +41,7 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get('/profile', [UserController::class, 'profile']);
         Route::post('/profile', [UserController::class, 'storeProfile']);
+        Route::resource('place-registration', PlaceRegistrationController::class);
     });
 
     Route::group(['prefix' => 'admin', 'middleware' => 'auth.role:' . \App\Models\User::ROLE_USER_ADMIN], function () {

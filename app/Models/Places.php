@@ -57,4 +57,9 @@ class Places extends Model
 
         return $prefix . sprintf('%05d', ($model_count++));
     }
+
+    public static function getByPlaceCode($place_code)
+    {
+        return static::where('place_code', $place_code)->first();
+    }
 }
