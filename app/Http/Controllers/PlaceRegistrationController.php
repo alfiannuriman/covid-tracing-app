@@ -78,14 +78,14 @@ class PlaceRegistrationController extends Controller
                 'title' => $alert_title,
             ]);
 
-            return redirect()->route('place_registration.index');
+            return redirect()->route('place-registration.index');
         } catch (\Exception $e) {
             session()->flash('general.alert', [
                 'type' => 'danger',
                 'title' => 'Cannot save data, please try again',
             ]);
 
-            return redirect()->route('place_registration.index');
+            return redirect()->route('place-registration.index');
         }
     }
 
@@ -190,6 +190,34 @@ class PlaceRegistrationController extends Controller
             session()->flash('general.alert', [
                 'type' => 'danger',
                 'title' => 'Cannot delete, please try again',
+                'subtitle' => $e->getMessage()
+            ]);
+
+            return redirect()->route('place-registration.index');
+        }
+    }
+
+    public function checkout($id)
+    {
+        try {
+            $alert_type = 'danger';
+            $alert_title = 'Cannot checkout, please try again';
+
+            if (Model::findOrFail($id)->setModelCheckout()) {
+                $alert_type = 'success';
+                $alert_title = 'Checkout performed successfully';
+            }
+
+            session()->flash('general.alert', [
+                'type' => $alert_type,
+                'title' => $alert_title,
+            ]);
+
+            return redirect()->route('place-registration.index');
+        } catch (\Exception $e) {
+            session()->flash('general.alert', [
+                'type' => 'danger',
+                'title' => 'Cannot checkout, please try again',
                 'subtitle' => $e->getMessage()
             ]);
 

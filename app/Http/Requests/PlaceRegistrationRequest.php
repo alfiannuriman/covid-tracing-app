@@ -26,7 +26,6 @@ class PlaceRegistrationRequest extends FormRequest
     {
         return [
             'place_id' => 'required|exists:App\Models\Places,place_code',
-            'place_registration_type_id' => 'required'
         ];
     }
 }

@@ -27,20 +27,6 @@
                         </div>
                       @enderror
                     </div>
-
-                    <div class="form-group">
-                      <label for="place_registration_type_id">Type</label>
-                      <select name="place_registration_type_id" id="place_registration_type_id" class="form-control @error('place_registration_type_id') is-invalid @enderror">
-                        @foreach ($form_options['place_registration_types'] as $type)
-                          <option value="{{ $type->id }}">{{ $type->name }}</option>
-                        @endforeach
-                        @error('place_registration_type_id')
-                          <div class="invalid-feedback">
-                            {{ $message }}
-                          </div>
-                        @enderror
-                      </select>
-                    </div>
                   </div>
                 </div>
 

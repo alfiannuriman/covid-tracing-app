@@ -49,8 +49,8 @@
                   <th scope="col">Place name</th>
                   <th scope="col">Place address</th>
                   <th scope="col">Place code</th>
-                  <th scope="col">Type</th>
-                  <th scope="col">Time</th>
+                  <th scope="col">Check in time</th>
+                  <th scope="col">Check out time</th>
                   <th scope="col">Actions</th>
                 </tr>
               </thead>
@@ -60,36 +60,27 @@
                     <td>{{ $model->place->name }}</td>
                     <td>{{ $model->place->address }}</td>
                     <td>{{ $model->place->place_code }}</td>
-                    <td>{{ $model->place_registration_type->name }}</td>
-                    <td>{{ date('d-m-Y H:i:s', strtotime($model->created_at)) }}</td>
+                    <td>{{ !is_null($model->check_in_date) ? date('d-m-Y H:i:s', strtotime($model->check_in_date)) : '-' }}</td>
+                    <td>{{ !is_null($model->check_out_date) ? date('d-m-Y H:i:s', strtotime($model->check_out_date)) : '-' }}</td>
                     <td>
                       <div class="row">
                         <div class="col-2">
-                          <a 
-                            href="{{ route('place-registration.edit', ['place_registration' => $model->id]) }}"
-                            class="btn btn-icon btn-default btn-sm" 
-                            data-toggle="tooltip" 
-                            data-placement="top" 
-                            title="Edit"
-                          >
-                            <span class="btn-inner--icon"><i class="fas fa-pencil-alt"></i></span>
-                          </a>
-                        </div>
-                        <div class="col-2 offset-1">
-                          <form action="{{ route('place-registration.destroy', ['place_registration' => $model->id]) }}" method="POST">
-                            @csrf @method('DELETE')
-      
-                            <button 
-                              class="btn btn-icon btn-danger btn-sm" 
-                              type="submit"
-                              data-toggle="tooltip" 
-                              data-placement="top" 
-                              title="Delete"
-                              onclick="return confirm('Are you sure to delete data ?')"
-                            >
-                              <span class="btn-inner--icon"><i class="fas fa-trash-alt"></i></span>
-                            </button>
-                          </form>
+                          @if ($model->is_session_active == 1)
+                            <form action="{{ route('place-registration.checkout', ['id' => $model->id]) }}" method="POST">
+                              @csrf
+        
+                              <button 
+                                class="btn btn-icon btn-primary btn-sm" 
+                                type="submit"
+                                data-toggle="tooltip" 
+                                data-placement="top" 
+                                title="Checkout"
+                                onclick="return confirm('Are you sure to checkout ?')"
+                              >
+                                <span class="btn-inner--icon"><i class="fas fa-sign-out-alt"></i></span>
+                              </button>
+                            </form>                              
+                          @endif
                         </div>
                       </div>
                     </td>

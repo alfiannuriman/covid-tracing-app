@@ -42,6 +42,9 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get('/profile', [UserController::class, 'profile']);
         Route::post('/profile', [UserController::class, 'storeProfile']);
+
+        Route::post('place-registration/{id}/checkout', [PlaceRegistrationController::class, 'checkout'])->name('place-registration.checkout');
+
         Route::resource('place-registration', PlaceRegistrationController::class);
         Route::resource('alerting', AlertingController::class);
     });

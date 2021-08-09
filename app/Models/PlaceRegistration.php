@@ -11,7 +11,7 @@ class PlaceRegistration extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'place_id', 'user_id', 'place_registration_type_id'
+        'place_id', 'user_id', 'is_session_active', 'check_in_date', 'check_out_date'
     ];
 
     public static function getModel($params, $raw = false)
@@ -38,7 +38,7 @@ class PlaceRegistration extends Model
     {
         try {
             $this->user_id = isset($data['user_id']) ? $data['user_id'] : auth()->user()->id;
-            $this->place_registration_type_id = $data['place_registration_type_id'];
+            $this->check_in_date = \Carbon\Carbon::now();
 
             $place_model = \App\Models\Places::getByPlaceCode($data['place_id']);
 
@@ -52,6 +52,14 @@ class PlaceRegistration extends Model
         }
     }
 
+    public function setModelCheckout()
+    {
+        return $this->update([
+            'is_session_active' => 0,
+            'check_out_date' => \Carbon\Carbon::now()
+        ]);
+    }
+
     public function place()
     {
         return $this->belongsTo(Places::class);
@@ -60,10 +68,5 @@ class PlaceRegistration extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function place_registration_type()
-    {
-        return $this->belongsTo(PlaceRegistrationType::class);
     }
 }
