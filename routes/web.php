@@ -44,6 +44,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/profile', [UserController::class, 'storeProfile']);
 
         Route::post('place-registration/{id}/checkout', [PlaceRegistrationController::class, 'checkout'])->name('place-registration.checkout');
+        Route::post('alerting/{id}/resolve', [AlertingController::class, 'resolve'])->name('alerting.resolve');
 
         Route::resource('place-registration', PlaceRegistrationController::class);
         Route::resource('alerting', AlertingController::class);

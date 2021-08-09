@@ -46,13 +46,13 @@
               {{ $user->name }}<span class="font-weight-light">, {{ !is_null($profile) ? $profile->age : '' }}</span>
             </h5>
             <div class="h5 font-weight-300">
-              <i class="ni location_pin mr-2"></i>{{ !is_null($profile->gender) ? $profile->gender->name : '' }}
+              <i class="ni location_pin mr-2"></i>{{ (!is_null($profile) && !is_null($profile->gender)) ? $profile->gender->name : '' }}
             </div>
             <div class="h5 mt-4">
-              <i class="ni business_briefcase-24 mr-2"></i>{{ $user->email }} | {{ !is_null($profile->phone) ? $profile->phone : '' }}
+              <i class="ni business_briefcase-24 mr-2"></i>{{ $user->email }} | {{ (!is_null($profile) && !is_null($profile->phone)) ? $profile->phone : '' }}
             </div>
             <div>
-              {{ !is_null($profile->address) ? $profile->address : '' }}
+              {{ (!is_null($profile) && !is_null($profile->address)) ? $profile->address : '' }}
             </div>
           </div>
         </div>

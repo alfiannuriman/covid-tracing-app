@@ -59,6 +59,21 @@ class PlaceRegistration extends Model
             'check_out_date' => \Carbon\Carbon::now()
         ]);
     }
+    
+    /**
+     * Get related data from another user in the same place and time
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getRelated()
+    {
+        return static::where([
+            ['place_id', '=', $this->place_id],
+            ['user_id', '!=', $this->user_id],
+            ['check_in_date', '>=', $this->check_in_date],
+            ['check_out_date', '<=', (!is_null($this->check_out_date) ? $this->check_out_date : $this->check_in_date)]
+        ]);
+    }
 
     public function place()
     {
