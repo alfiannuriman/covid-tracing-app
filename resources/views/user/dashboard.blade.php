@@ -5,7 +5,7 @@
       <div class="card">
         <div class="card-header bg-transparent">
           <h6 class="text-muted ls-1 mb-1">Selamat datang,</h6>
-          <h5 class="h3 mb-0 text-uppercase">Muchamad Alfian Nur Iman</h5>
+          <h5 class="h3 mb-0 text-uppercase">{{ auth()->user()->name }}</h5>
         </div>
       </div>
     </div>

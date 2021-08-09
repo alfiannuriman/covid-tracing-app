@@ -4,7 +4,7 @@
     <!-- Brand -->
     <div class="sidenav-header  align-items-center">
       <a class="navbar-brand" href="javascript:void(0)">
-        <img src="{{ asset('static/img/brand/blue.png') }}" class="navbar-brand-img" alt="...">
+        <img src="{{ asset('static/img/brand/logo-black.png') }}" class="navbar-brand-img" alt="...">
       </a>
     </div>
     <div class="navbar-inner">
@@ -13,32 +13,39 @@
         <!-- Nav items -->
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link active" href="examples/dashboard.html">
+            <a class="nav-link active" href="{{ (auth()->user()->hasRole(\App\Models\User::ROLE_USER_ADMIN)) ? url('/admin/dashboard') : url('/user/dashboard') }}">
               <i class="ni ni-tv-2 text-primary"></i>
               <span class="nav-link-text">Dashboard</span>
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url('/admin/places') }}">
-              <i class="ni ni-building text-primary"></i>
-              <span class="nav-link-text">Places</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url('/user/profile') }}">
-              <i class="ni ni-single-02 text-yellow"></i>
-              <span class="nav-link-text">Profile</span>
-            </a>
-          </li>
+
+          @if ((auth()->user()->hasRole([\App\Models\User::ROLE_USER_ADMIN, \App\Models\User::ROLE_USER_PLACE_ADMIN])))
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url('/admin/places') }}">
+                <i class="ni ni-building text-primary"></i>
+                <span class="nav-link-text">Places</span>
+              </a>
+            </li>              
+          @endif
+
+          @if (auth()->user()->hasRole(\App\Models\User::ROLE_USER_CUSTOMER))
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url('/user/profile') }}">
+                <i class="ni ni-single-02 text-primary"></i>
+                <span class="nav-link-text">Profile</span>
+              </a>
+            </li>            
+          @endif
+
           <li class="nav-item">
             <a class="nav-link" href="{{ url('/user/place-registration') }}">
-              <i class="ni ni-bullet-list-67 text-default"></i>
+              <i class="ni ni-pin-3 text-primary"></i>
               <span class="nav-link-text">Place registration</span>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{ url('/user/alerting') }}">
-              <i class="ni ni-key-25 text-info"></i>
+              <i class="ni ni-notification-70 text-primary"></i>
               <span class="nav-link-text">Alerting</span>
             </a>
           </li>
@@ -52,20 +59,20 @@
         <!-- Navigation -->
         <ul class="navbar-nav mb-md-3">
           <li class="nav-item">
-            <a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/getting-started/overview.html" target="_blank">
-              <i class="ni ni-spaceship"></i>
+            <a class="nav-link" href="#">
+              <i class="fas fa-question-circle"></i>
               <span class="nav-link-text">Help center</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/foundation/colors.html" target="_blank">
-              <i class="ni ni-palette"></i>
+            <a class="nav-link" href="#">
+              <i class="fas fa-info-circle"></i>
               <span class="nav-link-text">About</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/components/alerts.html" target="_blank">
-              <i class="ni ni-ui-04"></i>
+            <a class="nav-link" href="#">
+              <i class="fas fa-headset"></i>
               <span class="nav-link-text">119 | Hotline COVID-19</span>
             </a>
           </li>
